@@ -6,7 +6,9 @@ import os
 import attr
 import numpy as np
 import torch
-from transformers import BertModel, BertTokenizer
+from transformers import AutoModel, AutoTokenizer
+
+
 
 from ratsql.models import abstract_preproc
 from ratsql.models.spider import spider_enc_modules
@@ -665,7 +667,7 @@ class SpiderEncoderBertPreproc(SpiderEncoderV2Preproc):
         self.counted_db_ids = set()
         self.preprocessed_schemas = {}
 
-        self.tokenizer = BertTokenizer.from_pretrained(bert_version)
+        self.tokenizer = AutoTokenizer.from_pretrained(bert_version)
 
         # TODO: should get types from the data
         column_types = ["text", "number", "time", "boolean", "others"]
@@ -721,7 +723,7 @@ class SpiderEncoderBertPreproc(SpiderEncoderV2Preproc):
         num_words = len(question) + 2 + \
                     sum(len(c) + 1 for c in preproc_schema.column_names) + \
                     sum(len(t) + 1 for t in preproc_schema.table_names)
-        if num_words > 512:
+        if num_words > 256:
             return False, None  # remove long sequences
         else:
             return True, None
@@ -745,7 +747,7 @@ class SpiderEncoderBertPreproc(SpiderEncoderV2Preproc):
                     f.write(json.dumps(text) + '\n')
 
     def load(self):
-        self.tokenizer = BertTokenizer.from_pretrained(self.data_dir)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.data_dir)
 
 
 @registry.register('encoder', 'spider-bert')
@@ -791,7 +793,7 @@ class SpiderEncoderBert(torch.nn.Module):
             sc_link=True,
         )
 
-        self.bert_model = BertModel.from_pretrained(bert_version)
+        self.bert_model = AutoModel.from_pretrained(bert_version)
         self.tokenizer = self.preproc.tokenizer
         self.bert_model.resize_token_embeddings(len(self.tokenizer))  # several tokens added
 
@@ -816,7 +818,7 @@ class SpiderEncoderBert(torch.nn.Module):
             token_list = qs + [c for col in cols for c in col] + \
                          [t for tab in tabs for t in tab]
             assert self.check_bert_seq(token_list)
-            if len(token_list) > 512:
+            if len(token_list) > 256:
                 long_seq_set.add(batch_idx)
                 continue
 
@@ -996,7 +998,7 @@ class SpiderEncoderBert(torch.nn.Module):
     def pad_sequence_for_bert_batch(self, tokens_lists):
         pad_id = self.tokenizer.pad_token_id
         max_len = max([len(it) for it in tokens_lists])
-        assert max_len <= 512
+        assert max_len <= 256
         toks_ids = []
         att_masks = []
         tok_type_lists = []
