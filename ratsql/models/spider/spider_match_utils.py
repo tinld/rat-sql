@@ -1,9 +1,9 @@
 import re
 import string
 
-import nltk.corpus
+import nltk
 
-STOPWORDS = set(nltk.corpus.stopwords.words('english'))
+STOPWORDS = nltk.download('stopwords')
 PUNKS = set(a for a in string.punctuation)
 
 

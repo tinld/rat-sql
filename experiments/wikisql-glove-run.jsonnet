@@ -1,9 +1,9 @@
 {
     logdir: "logdir/glove_run",
-    model_config: "configs/wikisql/nl2code-wikisql.jsonnet",
+    model_config: "/content/drive/MyDrive/RATSQL/configs/wikisql/nl2code-wikisql.jsonnet",
     model_config_args: {
         att: 0,
-        data_path: 'data/wikisql/',
+        data_path: '/content/drive/MyDrive/RATSQL/data/word-level/',
     },
 
     eval_name: "wikisql_glove_run_%s_%d" % [self.eval_use_heuristic, self.eval_beam_size],

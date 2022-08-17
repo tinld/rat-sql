@@ -1,8 +1,8 @@
 {
     logdir: "logdir/bert_run",
-    model_config: "configs/spider/nl2code-bert.jsonnet",
+    model_config: "/content/drive/MyDrive/RATSQL/configs/spider/nl2code-bert.jsonnet",
     model_config_args: {
-        data_path: 'data/spider/',
+        data_path: '/content/drive/MyDrive/RATSQL/data/word-level/',
         bs: 6,
         num_batch_accumulated: 4,
         bert_version: "vinai/phobert-base",

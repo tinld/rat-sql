@@ -1,4 +1,4 @@
-local _base = import '../spider/nl2code-align.jsonnet';
+local _base = import '/content/drive/MyDrive/RATSQL/configs/spider/nl2code-align.jsonnet';
 
 function(args) _base(args + { 
     end_lr: 0,
@@ -17,22 +17,22 @@ function(args) _base(args + {
     data: {
         train: {
             name: 'wikisql', 
-            paths: [args.data_path + 'train.jsonl'],
-            tables_paths: [args.data_path + 'train.tables.jsonl'],
+            paths: [args.data_path + 'train.json'],
+            tables_paths: [args.data_path + 'train.json'],
             db_path: args.data_path + 'train.db',
 #            limit: 100,
         },
         val: {
             name: 'wikisql', 
-            paths: [args.data_path + 'dev.jsonl'],
-            tables_paths: [args.data_path + 'dev.tables.jsonl'],
+            paths: [args.data_path + 'dev.json'],
+            tables_paths: [args.data_path + 'dev.json'],
             db_path: args.data_path + 'dev.db',
 #            limit: 100,
         },
         test: {
             name: 'wikisql', 
-            paths: [args.data_path + 'test.jsonl'],
-            tables_paths: [args.data_path + 'test.tables.jsonl'],
+            paths: [args.data_path + 'test.json'],
+            tables_paths: [args.data_path + 'test.json'],
             db_path: args.data_path + 'test.db',
 #            limit: 100,
         },

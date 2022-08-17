@@ -9,7 +9,6 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 
 
-
 from ratsql.models import abstract_preproc
 from ratsql.models.spider import spider_enc_modules
 from ratsql.models.spider.spider_match_utils import (
